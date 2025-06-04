@@ -1,9 +1,9 @@
-FROM golang:1.21-alpine as helper
+FROM golang:1.24-alpine as helper
 WORKDIR /go/src/github.com/bdwyertech/kaniko-gitlab/helper-utility
 COPY helper-utility/ .
 RUN CGO_ENABLED=0 GOFLAGS=-mod=vendor go build -ldflags="-s -w" -trimpath .
 
-FROM gcr.io/kaniko-project/executor:v1.23.2-debug
+FROM gcr.io/kaniko-project/executor:v1.24.0-debug
 
 COPY --from=helper /go/src/github.com/bdwyertech/kaniko-gitlab/helper-utility/helper-utility /kaniko/.
 
